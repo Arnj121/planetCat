@@ -9,32 +9,36 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   TextEditingController searchCont = TextEditingController();
-  dynamic Bodies = [];
+  dynamic astroBodies = [];bool lightmode=true;
   @override
   Widget build(BuildContext context) {
-    Bodies = ModalRoute.of(context).settings.arguments;
+    astroBodies = ModalRoute.of(context).settings.arguments;
+    lightmode = MediaQuery.of(context).platformBrightness ==Brightness.light;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: lightmode?Colors.white:null,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: lightmode?Colors.white:null,
+          title: Text(
+            'Catalogue',
+            style: GoogleFonts.openSans(
+                color: Colors.deepPurpleAccent[100]
+            ),
+          ),
+          actions: [
+            IconButton(
+                icon: Icon(
+                  Icons.settings,
+                  color: Colors.deepPurpleAccent[100],
+                ),
+                onPressed: (){}
+            )
+          ],
+          centerTitle: true,
+        ),
         body: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              title: Text(
-                'Catalogue',
-                style: GoogleFonts.openSans(
-                  color: Colors.deepPurpleAccent[100]
-                ),
-              ),
-              actions: [
-                IconButton(
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.deepPurpleAccent[100],
-                    ),
-                    onPressed: (){}
-                )
-              ],
-              centerTitle: true,
-            ),
             SliverList(
               delegate: SliverChildListDelegate(
                     [
@@ -50,7 +54,7 @@ class _HomeState extends State<Home> {
                           ),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 2, horizontal: 10),
-                          filled: true,
+                          filled: lightmode?false:true,
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(width: 1,
                                   color: Colors.deepPurpleAccent[100])),
@@ -61,8 +65,7 @@ class _HomeState extends State<Home> {
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
                                   width: 1, color: Colors.grey[850])),
-                          prefixIcon: Icon(Icons.search, color: Colors
-                              .deepPurpleAccent[100],),
+                          prefixIcon: Icon(Icons.search, color: Colors.deepPurpleAccent[100],),
                         ),
                         cursorHeight: 20,
                         ),
@@ -84,7 +87,7 @@ class _HomeState extends State<Home> {
                               SizedBox(width: 10,),
                               CircleAvatar(
                                 child: Text(
-                                  this.Bodies.length.toString(),
+                                  this.astroBodies.length.toString(),
                                   style: GoogleFonts.openSans(
                                     color: Colors.blueGrey[800]
                                   ),
@@ -104,9 +107,9 @@ class _HomeState extends State<Home> {
             SliverList(
               delegate:SliverChildBuilderDelegate(
                   (BuildContext context,int index){
-                    return BodyObj(index);
+                    return bodyObj(index);
                   },
-                childCount: Bodies.length
+                childCount: astroBodies.length
               )
             )
           ],
@@ -114,25 +117,25 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  Container BodyObj(int index){
+  Container bodyObj(int index){
     return Container(
       child: ListTile(
         onTap: (){},
         title: Text(
-          this.Bodies[index]['id'],
+          this.astroBodies[index]['id'],
           style: GoogleFonts.openSans(
             fontSize: 20,
             color: Colors.blueGrey[800]
           ),
         ),
         trailing: Text(
-          this.Bodies[index]['knownCount'].toString(),
+          this.astroBodies[index]['knownCount'].toString(),
           style: GoogleFonts.openSans(
             color: Colors.blueGrey[900]
           ),
         ),
         subtitle: Text(
-          'Last Updated : '+this.Bodies[index]['updateDate'],
+          'Last Updated : '+this.astroBodies[index]['updateDate'],
           style: GoogleFonts.openSans(
             color: Colors.grey[100]
           ),

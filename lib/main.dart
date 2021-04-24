@@ -15,14 +15,20 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-     initialRoute: '/loading',
+      themeMode: ThemeMode.system,
+      theme: ThemeData(
+        brightness: Brightness.light
+      ),
+      darkTheme:ThemeData(
+        brightness: Brightness.dark
+      ),
+      initialRoute: '/loading',
       routes: {
        '/loading':(context)=>Loading(),
         '/home':(context)=>Home(),
         '/bodies':(context)=>Bodies(),
         '/planetinfo':(context)=>PlanetInfo()
       },
-      darkTheme:ThemeData.dark(),
     );
   }
 }
