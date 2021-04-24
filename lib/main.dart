@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:planet/home.dart';
 import 'package:planet/loading.dart';
-import 'package:planet/bodies.dart';
+import 'package:planet/moonInfo.dart';
+import 'package:planet/settings.dart';
+import 'package:planet/planets.dart';
 import 'package:planet/planetInfo.dart';
-
 void main(){runApp(MyApp());}
 
 class MyApp extends StatefulWidget {
@@ -26,8 +27,10 @@ class _MyAppState extends State<MyApp> {
       routes: {
        '/loading':(context)=>Loading(),
         '/home':(context)=>Home(),
-        '/bodies':(context)=>Bodies(),
-        '/planetinfo':(context)=>PlanetInfo()
+        '/planetinfo':(context)=>PlanetInfo(),
+        '/settings':(context)=>Settings(),
+        '/planets':(context)=>Planets(),
+        '/mooninfo':(context)=>MoonInfo()
       },
     );
   }

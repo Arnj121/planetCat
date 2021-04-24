@@ -9,10 +9,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   TextEditingController searchCont = TextEditingController();
-  dynamic astroBodies = [];bool lightmode=true;
+  dynamic astroBodiesCount = [];bool lightmode=true;
+  dynamic astroBodies = [];
   @override
   Widget build(BuildContext context) {
-    astroBodies = ModalRoute.of(context).settings.arguments;
+
+    dynamic temp = ModalRoute.of(context).settings.arguments;
+    astroBodiesCount=temp['count'];astroBodies=temp['bodies'];
     lightmode = MediaQuery.of(context).platformBrightness ==Brightness.light;
     return SafeArea(
       child: Scaffold(
@@ -22,8 +25,10 @@ class _HomeState extends State<Home> {
           backgroundColor: lightmode?Colors.white:null,
           title: Text(
             'Catalogue',
-            style: GoogleFonts.openSans(
-                color: Colors.deepPurpleAccent[100]
+            style: GoogleFonts.bangers(
+              color: Colors.deepPurpleAccent[100],
+              letterSpacing: 2,
+              fontSize: 25
             ),
           ),
           actions: [
@@ -47,7 +52,7 @@ class _HomeState extends State<Home> {
                         controller: searchCont,
                         decoration: InputDecoration(
                           hintText: 'Search',
-                          hintStyle: GoogleFonts.openSans(color: Colors
+                          hintStyle: GoogleFonts.quicksand(color: Colors
                               .deepPurpleAccent[100]),
                           border: OutlineInputBorder(
                               borderSide: BorderSide(width: 0)
@@ -72,44 +77,183 @@ class _HomeState extends State<Home> {
                         margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                       ),
                       SizedBox(height: 20,),
-                      Visibility(
-                        visible: true,
-                        child: Container(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Categories',
-                                style: GoogleFonts.openSans(
-                                  color: Colors.purpleAccent,
-                                  fontSize: 20
-                                ),
-                              ),
-                              SizedBox(width: 10,),
-                              CircleAvatar(
-                                child: Text(
-                                  this.astroBodies.length.toString(),
-                                  style: GoogleFonts.openSans(
-                                    color: Colors.blueGrey[800]
-                                  ),
-                                ),
-                                backgroundColor: Colors.white,
-                                maxRadius: 10,
-                              )
-                            ],
-                          ),
-                          margin: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
-                        ),
-                      ),
-                      SizedBox(height: 20,),
                     ],
               ),
+            ),
+            SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 2,
+                  mainAxisSpacing: 5
+              ),
+              delegate: SliverChildListDelegate(
+                  [
+                    Listener(
+                      onPointerUp: (_){Navigator.pushNamed(context, '/planets',arguments: astroBodies);},
+                      child: Container(
+                        child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: AssetImage('./assets/planet.jpg',),
+                                ),
+                                borderRadius: BorderRadius.circular(5)
+                              ),
+                              margin: EdgeInsets.all(0),
+                            ),
+                            Center(
+                              child: Text(
+                                'Planets',
+                                style: GoogleFonts.quicksand(
+                                  color: Colors.white,
+                                  fontSize: 25
+                                ),
+                              ),
+                            ),
+                          ]
+                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                      ),
+                    ),
+                    Listener(
+                      child: Container(
+                        child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('./assets/moon.jpg',),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                margin: EdgeInsets.all(0),
+                              ),
+                              Center(
+                                child: Text(
+                                  'Moons',
+                                  style: GoogleFonts.quicksand(
+                                      color: Colors.white,
+                                      fontSize: 25
+                                  ),
+                                ),
+                              ),
+                            ]
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                      ),
+                    ),
+                    Listener(
+                      child: Container(
+                        child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('./assets/pluto.jpg',),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                margin: EdgeInsets.all(0),
+                              ),
+                              Center(
+                                child: Text(
+                                  'Dwarf Planets',
+                                  style: GoogleFonts.quicksand(
+                                      color: Colors.white,
+                                      fontSize: 25
+                                  ),
+                                ),
+                              ),
+                            ]
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                      ),
+                    ),
+                    Listener(
+                      child: Container(
+                        child: Stack(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage('./assets/asteroid.jpg',),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5)
+                                ),
+                                margin: EdgeInsets.all(0),
+                              ),
+                              Center(
+                                child: Text(
+                                  'Asteroids',
+                                  style: GoogleFonts.quicksand(
+                                      color: Colors.white,
+                                      fontSize: 25
+                                  ),
+                                ),
+                              ),
+                            ]
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                      ),
+                    ),
+                  ]
+              ),
+            ),
+            SliverList(
+                delegate:SliverChildListDelegate(
+                      [
+                        SizedBox(height: 20,),
+                        Container(
+                        child: Row(
+                          children: [
+                            Text(
+                              'Categories',
+                              style: GoogleFonts.quicksand(
+                                  color: Colors.purpleAccent,
+                                  fontSize: 20
+                              ),
+                            ),
+                            SizedBox(width: 10,),
+                            CircleAvatar(
+                              child: Text(
+                                this.astroBodiesCount.length.toString(),
+                                style: GoogleFonts.quicksand(
+                                    color: Colors.blueGrey[800]
+                                ),
+                              ),
+                              backgroundColor: Colors.white,
+                              maxRadius: 10,
+                            )
+                          ],
+                        ),
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
+                      )
+                    ]
+                )
             ),
             SliverList(
               delegate:SliverChildBuilderDelegate(
                   (BuildContext context,int index){
                     return bodyObj(index);
                   },
-                childCount: astroBodies.length
+                childCount: astroBodiesCount.length
               )
             )
           ],
@@ -120,23 +264,23 @@ class _HomeState extends State<Home> {
   Container bodyObj(int index){
     return Container(
       child: ListTile(
-        onTap: (){},
         title: Text(
-          this.astroBodies[index]['id'],
-          style: GoogleFonts.openSans(
+          this.astroBodiesCount[index]['id'],
+          style: GoogleFonts.quicksand(
             fontSize: 20,
             color: Colors.blueGrey[800]
           ),
         ),
         trailing: Text(
-          this.astroBodies[index]['knownCount'].toString(),
-          style: GoogleFonts.openSans(
-            color: Colors.blueGrey[900]
+          this.astroBodiesCount[index]['knownCount'].toString(),
+          style: GoogleFonts.quicksand(
+            color: Colors.blueGrey[900],
+            fontSize: 20
           ),
         ),
         subtitle: Text(
-          'Last Updated : '+this.astroBodies[index]['updateDate'],
-          style: GoogleFonts.openSans(
+          'Last Updated : '+this.astroBodiesCount[index]['updateDate'],
+          style: GoogleFonts.quicksand(
             color: Colors.grey[100]
           ),
         ),

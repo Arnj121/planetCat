@@ -11,15 +11,19 @@ class Loading extends StatefulWidget {
 class _LoadingState extends State<Loading> {
 
   Future initData()async {
-    print('started');
+    dynamic data={};
     dynamic url = Uri.parse("https://api.le-systeme-solaire.net/rest.php/knowncount");
-    print(url);
     dynamic response = await http.get(
         url, headers: {"accept": "application/json"});
-    if (response.statusCode == 200) {
-      Navigator.pushReplacementNamed(
-          context, '/home', arguments: jsonDecode(response.body)['knowncount']);
-    }
+    if (response.statusCode == 200)
+      data['count']=jsonDecode(response.body)['knowncount'];
+    url = Uri.parse("https://api.le-systeme-solaire.net/rest.php/bodies");
+    response = await http.get(
+        url, headers: {"accept": "application/json"});
+    if (response.statusCode == 200)
+      data['bodies']=jsonDecode(response.body)['bodies'];
+    Navigator.pushReplacementNamed(
+        context, '/home', arguments: data);
   }
 
   @override void dispose() {
