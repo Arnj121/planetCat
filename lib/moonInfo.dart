@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,17 +10,24 @@ class MoonInfo extends StatefulWidget {
 
 class _MoonInfoState extends State<MoonInfo> {
   bool lightmode=true,done=false;
-  dynamic moonInfo=[];String u;
-
+  dynamic moonInfo=[];dynamic u;
+  String type='moon';
   Future initData()async{
-    dynamic url = Uri.parse(u);
-    print(url);
-    dynamic response = await http.get(url,headers: {"accept":'application/json'});
-    if(response.statusCode==200)
-      moonInfo=jsonDecode(response.body);
+    if(u['isUrl']) {
+      u = u['url'];
+      dynamic url = Uri.parse(u);
+      dynamic response = await http.get(
+          url, headers: {"accept": 'application/json'});
+      if (response.statusCode == 200)
+        moonInfo = jsonDecode(response.body);
+    }
+    else{
+      moonInfo=u['data'];
+      type = u['asteroid']? 'asteroid':'moon';
+    }
     this.setState(() {
-      moonInfo=moonInfo;
-      done=true;
+      moonInfo = moonInfo;
+      done = true;
     });
   }
 
@@ -48,6 +53,8 @@ class _MoonInfoState extends State<MoonInfo> {
               color: Colors.redAccent
             ),
           ),
+          elevation: 0,
+          titleSpacing: 0,
           leading: BackButton(color: Colors.redAccent,),
         ),
         body: CustomScrollView(
@@ -71,10 +78,10 @@ class _MoonInfoState extends State<MoonInfo> {
                   Center(
                     child: Container(
                       child: Text(
-                        'It\'s a moon!',
+                        'It\'s a $type!',
                         style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300],
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300],
                         ),
                       ),
                     ),
@@ -85,7 +92,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'English name : '+moonInfo['englishName'],
                       style: GoogleFonts.quicksand(
                         fontSize: 20,
-                        color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                        color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                     // margin: EdgeInsets.symmetric(vertical: 20,horizontal: 15),
@@ -100,7 +107,7 @@ class _MoonInfoState extends State<MoonInfo> {
                                 'Discovered by : '+moonInfo['discoveredBy'],
                                 style: GoogleFonts.quicksand(
                                   fontSize: 20,
-                                  color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                                  color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                                 ),
                               )
                             )
@@ -117,7 +124,7 @@ class _MoonInfoState extends State<MoonInfo> {
                                   'Discovery Date : '+moonInfo['discoveryDate'],
                                   style: GoogleFonts.quicksand(
                                       fontSize: 20,
-                                      color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                                      color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                                   ),
                                 )
                             )
@@ -137,20 +144,22 @@ class _MoonInfoState extends State<MoonInfo> {
                   SizedBox(height: 10,),
                   Center(
                     child: Text(
+                      moonInfo['mass']==null? 'Mass : 0':
                       'Mass : '+moonInfo['mass']['massValue'].toString()+'^'+moonInfo['mass']['massExponent'].toString(),
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
                   SizedBox(height: 10,),
                   Center(
                     child: Text(
+                      moonInfo['vol']==null?'Volume : 0':
                       'Volume : '+moonInfo['vol']['volValue'].toString()+'^'+moonInfo['vol']['volExponent'].toString(),
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -160,7 +169,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Density : '+moonInfo['density'].toString()+' g/cm3',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -170,7 +179,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Gravity : '+moonInfo['gravity'].toString()+ ' m/s2',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -180,7 +189,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Escape Velocity : '+(moonInfo['escape']/1000).toString()+' km/s',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -191,7 +200,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Equator Radius : '+moonInfo['equaRadius'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -201,7 +210,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Polar Radius : '+moonInfo['polarRadius'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -211,7 +220,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Mean Radius : '+moonInfo['meanRadius'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -221,17 +230,18 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Axial Tilt : '+moonInfo['axialTilt'].toString()+' deg',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
                   SizedBox(height: 10,),
                   Center(
                     child: Text(
+                      moonInfo['aroundPlanet']==null?'Around Planet : ':
                       'Around Planet : '+moonInfo['aroundPlanet']['planet'].toString(),
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -251,7 +261,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Orbital Period : '+moonInfo['sideralOrbit'].toString()+ ' ED',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -261,7 +271,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Rotational Period : '+moonInfo['sideralRotation'].toString()+ ' ED',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -271,7 +281,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'SemiMajor Axis : '+moonInfo['semimajorAxis'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -281,7 +291,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Perihelion : '+moonInfo['perihelion'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -291,7 +301,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Aphelion : '+moonInfo['aphelion'].toString()+' km',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -301,7 +311,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Eccentricity : '+moonInfo['eccentricity'].toString(),
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),
@@ -311,7 +321,7 @@ class _MoonInfoState extends State<MoonInfo> {
                       'Inclination : '+moonInfo['inclination'].toString()+' deg',
                       style: GoogleFonts.quicksand(
                           fontSize: 20,
-                          color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                       ),
                     ),
                   ),

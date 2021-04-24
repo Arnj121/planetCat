@@ -5,6 +5,9 @@ import 'package:planet/moonInfo.dart';
 import 'package:planet/settings.dart';
 import 'package:planet/planets.dart';
 import 'package:planet/planetInfo.dart';
+import 'package:planet/moons.dart';
+import 'package:planet/dwarfPlanet.dart';
+import 'package:planet/asteroid.dart';
 void main(){runApp(MyApp());}
 
 class MyApp extends StatefulWidget {
@@ -30,7 +33,10 @@ class _MyAppState extends State<MyApp> {
         '/planetinfo':(context)=>PlanetInfo(),
         '/settings':(context)=>Settings(),
         '/planets':(context)=>Planets(),
-        '/mooninfo':(context)=>MoonInfo()
+        '/mooninfo':(context)=>MoonInfo(),
+        '/moons':(context)=>Moons(),
+        '/dwarf':(context)=>DwarfPlanet(),
+        '/asteroid':(context)=>Asteroid()
       },
     );
   }

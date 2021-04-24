@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,11 +8,13 @@ class PlanetInfo extends StatefulWidget {
 
 class _PlanetInfoState extends State<PlanetInfo> {
   bool lightmode=true;
-  dynamic planetInfo=[];
+  dynamic planetInfo=[],temp;String dir='';
   @override
   Widget build(BuildContext context) {
     lightmode = MediaQuery.of(context).platformBrightness == Brightness.light;
-    planetInfo=ModalRoute.of(context).settings.arguments;
+    temp=ModalRoute.of(context).settings.arguments;
+    planetInfo=temp['data'];
+    dir = temp['dp']?'dplanet':'planet';
     return SafeArea(
       child: Scaffold(
         backgroundColor: lightmode?Colors.white:null,
@@ -25,6 +26,8 @@ class _PlanetInfoState extends State<PlanetInfo> {
                 color: Colors.redAccent
             ),
           ),
+          elevation: 0,
+          titleSpacing: 0,
           leading: BackButton(color: Colors.redAccent,),
         ),
         body: CustomScrollView(
@@ -37,7 +40,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                       child: Container(
                         decoration: BoxDecoration(
                             image:DecorationImage(
-                                image: AssetImage('./assets/planet/${planetInfo['id']}.jpg'),
+                                image: AssetImage('./assets/$dir/${planetInfo['id']}.jpg'),
                                 fit: BoxFit.cover
                             ),
                             borderRadius: BorderRadius.circular(100)
@@ -62,10 +65,10 @@ class _PlanetInfoState extends State<PlanetInfo> {
                     Center(
                       child: Container(
                         child: Text(
-                          'It\'s a planet!',
+                          'It\'s a dwarf planet!',
                           style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300],
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300],
                           ),
                         ),
                       ),
@@ -76,7 +79,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'English name : '+planetInfo['englishName'],
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                       // margin: EdgeInsets.symmetric(vertical: 20,horizontal: 15),
@@ -87,7 +90,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         planetInfo['moons']==null?'Moons : 0': 'Moons : ${planetInfo['moons'].length.toString()}',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -96,14 +99,17 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         child:Column(
                             children:[
                               SizedBox(height: 10,),
-                              Center(
-                                  child: Text(
-                                    'Discovered by : '+planetInfo['discoveredBy'],
-                                    style: GoogleFonts.quicksand(
-                                        fontSize: 20,
-                                        color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
-                                    ),
-                                  )
+                              Container(
+                                child: Center(
+                                    child: Text(
+                                      'Discovered by : '+planetInfo['discoveredBy'],
+                                      style: GoogleFonts.quicksand(
+                                          fontSize: 20,
+                                          color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
+                                      ),
+                                    )
+                                ),
+                                margin: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
                               )
                             ]
                         )
@@ -118,7 +124,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                                     'Discovery Date : '+planetInfo['discoveryDate'],
                                     style: GoogleFonts.quicksand(
                                         fontSize: 20,
-                                        color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                                        color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                                     ),
                                   )
                               )
@@ -141,7 +147,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Mass : '+planetInfo['mass']['massValue'].toString()+'^'+planetInfo['mass']['massExponent'].toString(),
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -151,7 +157,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Volume : '+planetInfo['vol']['volValue'].toString()+'^'+planetInfo['vol']['volExponent'].toString(),
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -161,7 +167,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Density : '+planetInfo['density'].toString()+' g/cm3',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -171,7 +177,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Gravity : '+planetInfo['gravity'].toString()+ ' m/s2',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -181,7 +187,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Escape Velocity : '+(planetInfo['escape']/1000).toString()+' km/s',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -192,7 +198,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Equator Radius : '+planetInfo['equaRadius'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -202,7 +208,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Polar Radius : '+planetInfo['polarRadius'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -212,7 +218,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Mean Radius : '+planetInfo['meanRadius'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -222,7 +228,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Axial Tilt : '+planetInfo['axialTilt'].toString()+' deg',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -242,7 +248,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Orbital Period : '+planetInfo['sideralOrbit'].toString()+ ' ED',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -252,17 +258,17 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Rotational Period : '+planetInfo['sideralRotation'].toString()+ ' ED',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
                     SizedBox(height: 10,),
                     Center(
                       child: Text(
-                        'SemiMajor Axis : '+planetInfo['semimajoraxis'].toString()+' km',
+                        planetInfo['semimajoraxis']==null? 'SemiMajor Axis : '+planetInfo['semimajorAxis'].toString()+' km':'SemiMajor Axis : '+planetInfo['semimajoraxis'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -272,7 +278,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Perihelion : '+planetInfo['perihelion'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -282,7 +288,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Aphelion : '+planetInfo['aphelion'].toString()+' km',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -292,7 +298,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Eccentricity : '+planetInfo['eccentricity'].toString(),
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -302,7 +308,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                         'Inclination : '+planetInfo['inclination'].toString()+' deg',
                         style: GoogleFonts.quicksand(
                             fontSize: 20,
-                            color: lightmode?Colors.blueGrey[900]:Colors.grey[300]
+                            color: lightmode?Colors.blueGrey[800]:Colors.grey[300]
                         ),
                       ),
                     ),
@@ -311,7 +317,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                       visible: planetInfo['moons']==null?false:true,
                       child: Center(
                         child: Text(
-                          'Moons ('+planetInfo['moons'].length.toString()+')',
+                            planetInfo['moons']==null?'':'Moons ('+planetInfo['moons'].length.toString()+')',
                           style: GoogleFonts.quicksand(
                               fontSize: 30,
                               color: lightmode?Colors.blueGrey[900]:Colors.white
@@ -327,7 +333,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                           '(click to get more info)',
                           style: GoogleFonts.quicksand(
                               fontSize: 15,
-                              color: lightmode?Colors.blueGrey[900]:Colors.white
+                              color: lightmode?Colors.blueGrey[800]:Colors.white
                           ),
                         ),
                       ),
@@ -346,12 +352,12 @@ class _PlanetInfoState extends State<PlanetInfo> {
                               child: Text(
                                 planetInfo['moons'][index]['moon'],
                                 style: GoogleFonts.quicksand(
-                                    color: lightmode?Colors.blueGrey[900]:Colors.grey[300],
+                                    color: lightmode?Colors.blueGrey[800]:Colors.grey[300],
                                     fontSize:20,
                                     decoration: TextDecoration.underline
                                 ),
                               ),
-                              onPressed: (){Navigator.pushNamed(context,'/mooninfo',arguments: planetInfo['moons'][index]['rel']);},
+                              onPressed: (){Navigator.pushNamed(context,'/mooninfo',arguments: {'url':planetInfo['moons'][index]['rel'],'isUrl':true});},
                             ),
                             margin: EdgeInsets.symmetric(vertical: 0,horizontal: 0),
                           ),

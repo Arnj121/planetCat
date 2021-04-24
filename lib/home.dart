@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 class Home extends StatefulWidget {
@@ -59,17 +58,17 @@ class _HomeState extends State<Home> {
                           ),
                           contentPadding: EdgeInsets.symmetric(
                               vertical: 2, horizontal: 10),
-                          filled: lightmode?false:true,
+                          filled: true,
                           focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(width: 1,
                                   color: Colors.deepPurpleAccent[100])),
-                          fillColor: Colors.grey[800],
+                          fillColor: lightmode?Colors.grey[300]:Colors.grey[800],
                           disabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  width: 1, color: Colors.grey[850])),
+                                  width: 1, color: lightmode?Colors.grey[300]:Colors.grey[850])),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                  width: 1, color: Colors.grey[850])),
+                                  width: 1, color: lightmode?Colors.grey[300]:Colors.grey[850])),
                           prefixIcon: Icon(Icons.search, color: Colors.deepPurpleAccent[100],),
                         ),
                         cursorHeight: 20,
@@ -83,14 +82,12 @@ class _HomeState extends State<Home> {
             SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 2,
+                  crossAxisSpacing: 0,
                   mainAxisSpacing: 5
               ),
               delegate: SliverChildListDelegate(
                   [
-                    Listener(
-                      onPointerUp: (_){Navigator.pushNamed(context, '/planets',arguments: astroBodies);},
-                      child: Container(
+                    Container(
                         child: Stack(
                           children: [
                             Container(
@@ -104,11 +101,16 @@ class _HomeState extends State<Home> {
                               margin: EdgeInsets.all(0),
                             ),
                             Center(
-                              child: Text(
-                                'Planets',
-                                style: GoogleFonts.quicksand(
-                                  color: Colors.white,
-                                  fontSize: 25
+                              child: ListTile(
+                                onTap: (){Navigator.pushNamed(context, '/planets',arguments: astroBodies);},
+                                title: Center(
+                                  child: Text(
+                                    'Planets',
+                                    style: GoogleFonts.quicksand(
+                                      color: Colors.white,
+                                      fontSize: 25
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -118,100 +120,108 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(5),
                         ),
                         margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
-                      ),
                     ),
-                    Listener(
-                      child: Container(
-                        child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage('./assets/moon.jpg',),
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                margin: EdgeInsets.all(0),
+                    Container(
+                      child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage('./assets/moon.jpg',),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5)
                               ),
-                              Center(
-                                child: Text(
-                                  'Moons',
-                                  style: GoogleFonts.quicksand(
-                                      color: Colors.white,
-                                      fontSize: 25
+                              margin: EdgeInsets.all(0),
+                            ),
+                            Center(
+                              child: ListTile(
+                                onTap: (){Navigator.pushNamed(context, '/moons',arguments: astroBodies);},
+                                title: Center(
+                                  child: Text(
+                                    'Moons',
+                                    style: GoogleFonts.quicksand(
+                                        color: Colors.white,
+                                        fontSize: 25
+                                    ),
                                   ),
                                 ),
                               ),
-                            ]
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                            ),
+                          ]
                       ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
                     ),
-                    Listener(
-                      child: Container(
-                        child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage('./assets/pluto.jpg',),
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                margin: EdgeInsets.all(0),
+                    Container(
+                      child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage('./assets/pluto.jpg',),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5)
                               ),
-                              Center(
-                                child: Text(
-                                  'Dwarf Planets',
-                                  style: GoogleFonts.quicksand(
-                                      color: Colors.white,
-                                      fontSize: 25
+                              margin: EdgeInsets.all(0),
+                            ),
+                            Center(
+                              child: ListTile(
+                                onTap: (){Navigator.pushNamed(context, '/dwarf',arguments: astroBodies);},
+                                title: Center(
+                                  child: Text(
+                                    'Dwarf Planets',
+                                    style: GoogleFonts.quicksand(
+                                        color: Colors.white,
+                                        fontSize: 25
+                                    ),
                                   ),
                                 ),
                               ),
-                            ]
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                            ),
+                          ]
                       ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
                     ),
-                    Listener(
-                      child: Container(
-                        child: Stack(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage('./assets/asteroid.jpg',),
-                                    ),
-                                    borderRadius: BorderRadius.circular(5)
-                                ),
-                                margin: EdgeInsets.all(0),
+                    Container(
+                      child: Stack(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage('./assets/asteroid.jpg',),
+                                  ),
+                                  borderRadius: BorderRadius.circular(5)
                               ),
-                              Center(
-                                child: Text(
-                                  'Asteroids',
-                                  style: GoogleFonts.quicksand(
-                                      color: Colors.white,
-                                      fontSize: 25
+                              margin: EdgeInsets.all(0),
+                            ),
+                            Center(
+                              child: ListTile(
+                                onTap: (){Navigator.pushNamed(context, '/asteroid',arguments: astroBodies);},
+                                title: Center(
+                                  child: Text(
+                                    'Asteroids',
+                                    style: GoogleFonts.quicksand(
+                                        color: Colors.white,
+                                        fontSize: 25
+                                    ),
                                   ),
                                 ),
                               ),
-                            ]
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
+                            ),
+                          ]
                       ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 0,horizontal: 5),
                     ),
                   ]
               ),

@@ -23,6 +23,7 @@ class _SettingsState extends State<Settings> {
             'Settings',
             style: GoogleFonts.openSans(),
           ),
+          titleSpacing: 0,
         ),
       ),
     );

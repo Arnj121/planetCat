@@ -1,46 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-class Moons extends StatefulWidget {
+class Asteroid extends StatefulWidget {
   @override
-  _MoonsState createState() => _MoonsState();
+  _AsteroidState createState() => _AsteroidState();
 }
 
-class _MoonsState extends State<Moons> {
-
+class _AsteroidState extends State<Asteroid> {
   bool lightmode=true,done=false;
+  dynamic asteroids=[],temp;
 
-  dynamic moon=[],temp;
-
-  Future<void> findMoons()async {
+  Future<void> findAsteroids()async {
     List<dynamic> list = [];
     List<String> planetList=['uranus','neptune','jupiter','mars','mercure','saturne','terre','venus'];
     List<String> moonList=[];
     temp.forEach((e){
-      if(e['isPlanet'] && planetList.contains(e['id']) && e['moons']!=null){
-        e['moons'].forEach((moon){
-          moonList.add(moon['moon']);
-        });
+      if(e['isPlanet'] && !planetList.contains(e['id'])){
+        planetList.add(e['id']);
       }
     });
     temp.forEach((e){
-      if(moonList.contains(e['name'])){
+      if(planetList.contains(e['id']) && e['moons']!=null)
+        e['moons'].forEach((moon){
+          moonList.add(moon['moon']);
+        });
+    });
+    temp.forEach((e){
+      if(!moonList.contains(e['name']) && !planetList.contains(e['id'])){
         list.add(e);
       }
     });
-    moon=list;
+    print(list.length);
+    asteroids=list;
     this.setState(() {
       done=true;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     temp=ModalRoute.of(context).settings.arguments;
-    findMoons();
+    findAsteroids();
     lightmode = MediaQuery.of(context).platformBrightness ==Brightness.light;
-    return SafeArea(
-        child:done?MainPage():Loading()
-    );
+    return done?MainPage():Loading();
   }
   Scaffold Loading(){
     return Scaffold(
@@ -59,15 +61,15 @@ class _MoonsState extends State<Moons> {
       appBar: AppBar(
         backgroundColor: lightmode?Colors.white:null,
         title: Text(
-          'Moons',
+          'Asteroids',
           style: GoogleFonts.quicksand(
-              color: Colors.pinkAccent
+              color: Colors.purple[400]
           ),
         ),
         elevation: 0,
         titleSpacing: 0,
         leading: BackButton(
-          color: Colors.pinkAccent,
+          color: Colors.purple[400],
         ),
       ),
       body: CustomScrollView(
@@ -78,7 +80,7 @@ class _MoonsState extends State<Moons> {
                   SizedBox(height: 20),
                   Center(
                     child: Text(
-                      'Moons Found ('+moon.length.toString()+')',
+                      'Asteroids Found ('+asteroids.length.toString()+')',
                       style: GoogleFonts.quicksand(
                           fontSize: 30
                       ),
@@ -89,26 +91,26 @@ class _MoonsState extends State<Moons> {
             ),
           ),
           SliverList(
-              delegate: SliverChildBuilderDelegate(
-                      (BuildContext context,int index){
-                    return MoonBuilder(index);
-                  },
-                  childCount: this.moon.length
-              ),
+            delegate: SliverChildBuilderDelegate(
+                    (BuildContext context,int index){
+                  return AsteroidBuilder(index);
+                },
+                childCount: this.asteroids.length
+            ),
           ),
           SliverList(delegate: SliverChildListDelegate([SizedBox(height: 20,)]))
         ],
       ),
     );
   }
-  Container MoonBuilder(int index){
+  Container AsteroidBuilder(int index){
     return Container(
       child: ListTile(
-        onTap: (){Navigator.pushNamed(context, '/mooninfo',arguments: {'data':moon[index],'isUrl':false,'asteroid':false});},
+        onTap: (){Navigator.pushNamed(context, '/mooninfo',arguments: {'data':asteroids[index],'isUrl':false,'asteroid':true});},
         title:Text(
-            moon[index]['englishName'],
-            style: GoogleFonts.quicksand(
-                color: Colors.white
+          asteroids[index]['englishName'],
+          style: GoogleFonts.quicksand(
+              color: Colors.white
           ),
         ),
         leading: CircleAvatar(
@@ -119,15 +121,14 @@ class _MoonsState extends State<Moons> {
           backgroundColor: lightmode?Colors.blue:null,
         ),
         subtitle: Text(
-          "orbits "+ moon[index]['aroundPlanet']['planet'],
+          "Alternate name "+ asteroids[index]['alternativeName'],
           style: GoogleFonts.quicksand(
-              color: Colors.grey[300],
+            color: Colors.grey[300],
           ),
         ),
       ),
       decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(5),
-        color: Colors.pinkAccent[100]
+          color: Colors.purple[200]
       ),
       margin: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
     );
