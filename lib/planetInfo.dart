@@ -65,7 +65,7 @@ class _PlanetInfoState extends State<PlanetInfo> {
                     Center(
                       child: Container(
                         child: Text(
-                          'It\'s a dwarf planet!',
+                          temp['dp']?'It\'s a dwarf planet!': 'It\'s a planet',
                           style: GoogleFonts.quicksand(
                             fontSize: 20,
                             color: lightmode?Colors.blueGrey[800]:Colors.grey[300],

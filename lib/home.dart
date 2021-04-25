@@ -7,12 +7,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  TextEditingController searchCont = TextEditingController();
-  dynamic astroBodiesCount = [];bool lightmode=true;
+  dynamic astroBodiesCount = [];bool lightmode=true,search=false;
   dynamic astroBodies = [];
+
   @override
   Widget build(BuildContext context) {
-
     dynamic temp = ModalRoute.of(context).settings.arguments;
     astroBodiesCount=temp['count'];astroBodies=temp['bodies'];
     lightmode = MediaQuery.of(context).platformBrightness ==Brightness.light;
@@ -33,52 +32,17 @@ class _HomeState extends State<Home> {
           actions: [
             IconButton(
                 icon: Icon(
-                  Icons.settings,
+                  Icons.search,
                   color: Colors.deepPurpleAccent[100],
                 ),
-                onPressed: (){}
+                onPressed: (){Navigator.pushNamed(context,'/search',arguments: astroBodies);}
             )
           ],
           centerTitle: true,
         ),
         body: CustomScrollView(
           slivers: [
-            SliverList(
-              delegate: SliverChildListDelegate(
-                    [
-                      Container(
-                      child: TextField(
-                        controller: searchCont,
-                        decoration: InputDecoration(
-                          hintText: 'Search',
-                          hintStyle: GoogleFonts.quicksand(color: Colors
-                              .deepPurpleAccent[100]),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(width: 0)
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 10),
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 1,
-                                  color: Colors.deepPurpleAccent[100])),
-                          fillColor: lightmode?Colors.grey[300]:Colors.grey[800],
-                          disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1, color: lightmode?Colors.grey[300]:Colors.grey[850])),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 1, color: lightmode?Colors.grey[300]:Colors.grey[850])),
-                          prefixIcon: Icon(Icons.search, color: Colors.deepPurpleAccent[100],),
-                        ),
-                        cursorHeight: 20,
-                        ),
-                        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                      ),
-                      SizedBox(height: 20,),
-                    ],
-              ),
-            ),
+            SliverList(delegate: SliverChildListDelegate([SizedBox(height: 30,)])),
             SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
