@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 class Moons extends StatefulWidget {
   @override
   _MoonsState createState() => _MoonsState();
@@ -75,7 +77,55 @@ class _MoonsState extends State<Moons> {
           SliverList(
             delegate: SliverChildListDelegate(
                 [
-                  SizedBox(height: 20),
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Text(
+                      'About',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 30
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Container(
+                      child: Text(
+                        'A natural satellite, or moon, is, in the most common usage, an astronomical body '
+                            'that orbits a planet or minor planet (or sometimes another small Solar System body).',
+                        style: GoogleFonts.quicksand(
+                            fontSize: 17
+                        ),
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Center(
+                    child: TextButton(
+                      child: Text(
+                        'https://en.wikipedia.org/wiki/Natural_satellite',
+                        style: GoogleFonts.quicksand(
+                            decoration: TextDecoration.underline,
+                            color: lightmode?Colors.blueGrey[800]:Colors.white
+                        ),
+                      ),
+                      onLongPress: (){
+                        Clipboard.setData(ClipboardData(text:'https://en.wikipedia.org/wiki/Natural_satellite'));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Copied to clipboard',style: GoogleFonts.quicksand()),
+                              duration: Duration(seconds: 1),
+                            )
+                        );
+                      },
+                      onPressed: (){
+                        launch('https://en.wikipedia.org/wiki/Natural_satellite');
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 30,),
                   Center(
                     child: Text(
                       'Moons Found ('+moon.length.toString()+')',
@@ -108,26 +158,27 @@ class _MoonsState extends State<Moons> {
         title:Text(
             moon[index]['englishName'],
             style: GoogleFonts.quicksand(
-                color: Colors.white
+                color: Colors.pinkAccent,
+              fontSize: 20
           ),
         ),
         leading: CircleAvatar(
           child: Icon(
             Icons.circle,
-            color: Colors.white,
+            color: Colors.pinkAccent,
           ),
           backgroundColor: lightmode?Colors.blue:null,
         ),
         subtitle: Text(
           "orbits "+ moon[index]['aroundPlanet']['planet'],
           style: GoogleFonts.quicksand(
-              color: Colors.grey[300],
+              color: Colors.pinkAccent,
           ),
         ),
       ),
       decoration: BoxDecoration(
         // borderRadius: BorderRadius.circular(5),
-        color: Colors.pinkAccent[100]
+        color: lightmode?Colors.grey[800]:Colors.grey[300]
       ),
       margin: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
     );

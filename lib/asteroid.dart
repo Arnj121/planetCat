@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 class Asteroid extends StatefulWidget {
   @override
   _AsteroidState createState() => _AsteroidState();
@@ -12,7 +15,7 @@ class _AsteroidState extends State<Asteroid> {
 
   Future<void> findAsteroids()async {
     List<dynamic> list = [];
-    List<String> planetList=['uranus','neptune','jupiter','mars','mercure','saturne','terre','venus'];
+    List<String> planetList=['uranus','neptune','jupiter','mars','mercure','saturne','terre','venus','soleil'];
     List<String> moonList=[];
     temp.forEach((e){
       if(e['isPlanet'] && !planetList.contains(e['id'])){
@@ -77,7 +80,56 @@ class _AsteroidState extends State<Asteroid> {
           SliverList(
             delegate: SliverChildListDelegate(
                 [
-                  SizedBox(height: 20),
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Text(
+                      'About',
+                      style: GoogleFonts.quicksand(
+                          fontSize: 30
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20,),
+                  Center(
+                    child: Container(
+                      child: Text(
+                        'An asteroid is a minor planet of the inner Solar System. Historically, '
+                            'these terms have been applied to any astronomical object orbiting the Sun that did not resolve'
+                            ' into a disc in a telescope and was not observed to have characteristics of an active comet such as a tail.',
+                        style: GoogleFonts.quicksand(
+                            fontSize: 17
+                        ),
+                        textAlign: TextAlign.center,
+                        softWrap: true,
+                      ),
+                      margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Center(
+                    child: TextButton(
+                      child: Text(
+                        'https://en.wikipedia.org/wiki/Asteroid',
+                        style: GoogleFonts.quicksand(
+                            decoration: TextDecoration.underline,
+                            color: lightmode?Colors.blueGrey[800]:Colors.white
+                        ),
+                      ),
+                      onLongPress: (){
+                        Clipboard.setData(ClipboardData(text:'https://en.wikipedia.org/wiki/Asteroid'));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Copied to clipboard',style: GoogleFonts.quicksand()),
+                              duration: Duration(seconds: 1),
+                            )
+                        );
+                      },
+                      onPressed: (){
+                        launch('https://en.wikipedia.org/wiki/Asteroid');
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 30,),
                   Center(
                     child: Text(
                       'Asteroids Found ('+asteroids.length.toString()+')',

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 class Planets extends StatefulWidget {
   @override
   _PlanetsState createState() => _PlanetsState();
@@ -70,9 +72,59 @@ class _PlanetsState extends State<Planets> {
                 SizedBox(height: 20),
                 Center(
                   child: Text(
+                    'About',
+                    style: GoogleFonts.quicksand(
+                        fontSize: 30
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                Center(
+                  child: Container(
+                    child: Text(
+                      'A planet is an astronomical body orbiting a star or stellar remnant that is massive enough to be '
+                          'rounded by its own gravity, is not massive enough to cause thermonuclear fusion, and – according to'
+                          ' the International Astronomical Union but not all planetary scientists – has cleared its neighbouring region of planetesimals.',
+                      style: GoogleFonts.quicksand(
+                        fontSize: 17,
+                        color: lightmode?Colors.blueGrey[800]:Colors.grey[300],
+                      ),
+                      textAlign: TextAlign.center,
+                      softWrap: true,
+                    ),
+                    margin: EdgeInsets.symmetric(vertical: 0,horizontal: 20),
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Center(
+                  child: TextButton(
+                    child: Text(
+                      'https://en.wikipedia.org/wiki/Planet',
+                      style: GoogleFonts.quicksand(
+                        decoration: TextDecoration.underline,
+                        color: lightmode?Colors.blueGrey[800]:Colors.white
+                      ),
+                    ),
+                    onLongPress: (){
+                      Clipboard.setData(ClipboardData(text:'https://en.wikipedia.org/wiki/Planet'));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Copied to clipboard',style: GoogleFonts.quicksand()),
+                            duration: Duration(seconds: 1),
+                          )
+                      );
+                    },
+                    onPressed: (){
+                      launch('https://en.wikipedia.org/wiki/Planet');
+                    },
+                  ),
+                ),
+                SizedBox(height: 30,),
+                Center(
+                  child: Text(
                     'Planets Found ('+planet.length.toString()+')',
                     style: GoogleFonts.quicksand(
-                      fontSize: 30
+                        fontSize: 30
                     ),
                   ),
                 ),

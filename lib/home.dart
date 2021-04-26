@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
         ),
         body: CustomScrollView(
           slivers: [
-            SliverList(delegate: SliverChildListDelegate([SizedBox(height: 30,)])),
+            SliverList(delegate: SliverChildListDelegate([SizedBox(height: 10,)])),
             SliverGrid(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
@@ -195,6 +195,61 @@ class _HomeState extends State<Home> {
                       [
                         SizedBox(height: 20,),
                         Container(
+                          child: ListTile(
+                            title: Center(
+                              child: Text(
+                                'Where is ISS At?',
+                                style: GoogleFonts.quicksand(
+                                  fontSize: 20,
+                                  color: Colors.white
+                                ),
+                              ),
+                            ),
+                            subtitle: Center(
+                              child: Text(
+                                'Click to know',
+                                style: GoogleFonts.quicksand(
+                                  color: Colors.grey[200],
+                                ),
+                              ),
+                            ),
+                            onTap: (){Navigator.pushNamed(context,'/whereisiss');},
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: Colors.orange
+                          ),
+                          margin: EdgeInsets.all(5),
+                        ),
+                        Container(
+                          child: ListTile(
+                            title: Center(
+                              child: Text(
+                                'Exoplanets',
+                                style: GoogleFonts.quicksand(
+                                    fontSize: 20,
+                                    color: Colors.white
+                                ),
+                              ),
+                            ),
+                            subtitle: Center(
+                              child: Text(
+                                'Click to know',
+                                style: GoogleFonts.quicksand(
+                                  color: Colors.grey[200],
+                                ),
+                              ),
+                            ),
+                            onTap: (){Navigator.pushNamed(context,'/exoplanet');},
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.red
+                          ),
+                          margin: EdgeInsets.all(5),
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
                         child: Row(
                           children: [
                             Text(
@@ -217,8 +272,9 @@ class _HomeState extends State<Home> {
                             )
                           ],
                         ),
-                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 10),
-                      )
+                        margin: EdgeInsets.symmetric(vertical: 0,horizontal: 15),
+                        ),
+                        SizedBox(height: 10,)
                     ]
                 )
             ),
